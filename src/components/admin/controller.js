@@ -1,4 +1,5 @@
 let usersModels = require('../../models/usersModels')
+let newsModels = require('../../models/newsModels')
 
 module.exports = { 
     async LoginPage (req, res) {
@@ -30,13 +31,41 @@ module.exports = {
         }
     },
     async NewsPage (req, res) {
+        let news = await newsModels.getNews()
         try {
-            res.status(200).render('news', { 
+            res.status(200).render('news', {
+                news, 
                 user: req.session.name
             })
         } catch (Error) {
             res.status(500).send({ Error: 'Something has gone wrong' })
         }
+},
+async NewsAddPage (req, res) {
+    try {
+        res.status(200).render('newsAdd')
+    } catch (Error) {
+        res.status(500).send({ Error: 'Something has gone wrong' })
+    }
+},
+async NewsAddPost (req, res) {
+    try {
+        if (
+            req.body.titulo != "" && 
+            req.body.subtitulo != "" &&
+            req.body.cuerpo != "" 
+        ) {
+            await newsModels.insertNews(req.body);
+            res.redirect('/admin/novedades')
+        } else {
+            res.render('newsAdd', {
+                error: true, message: 'Todos los campos son obligatorios'
+        })}
+    } catch (Error) {
+        res.status(500).render('newsAdd', {
+            error: true, message: 'No se cargo la novedad'
+        })
+    }
 },
 async Logout (req, res) {
     try {
