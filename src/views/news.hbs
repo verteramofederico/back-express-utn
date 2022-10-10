@@ -1,6 +1,9 @@
 <div class="">
 
 <div class="container" style="margin:50px auto">
+    {{#if error }}
+    <h5>{{message}}</h5>
+    {{/if}}
     <div class="row">
         <div class="col">
             <p class="text-right">Hola {{user}} 
@@ -32,9 +35,9 @@
                         <th scope="row">{{id}}</th>
                         <td>{{title}}</td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-secondary">
+                            <a href="/admin/novedades/modificar/{{id}}" class="btn btn-sm btn-secondary">
                             <i class="fa fa-pencil"></i></a>
-                            <a href="#" class="btn btn-sm btn-secondary">
+                            <a href="/admin/novedades/eliminar/{{id}}" class="btn btn-sm btn-secondary">
                             <i class="fa fa-trash"></i></a>
                         </td>
                     </tr>

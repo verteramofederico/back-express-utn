@@ -21,7 +21,7 @@ async function insertNews(obj) {
     }
 }
 
-async function deleteNew(id) {
+async function deleteNewById(id) {
     try {
         var query = 'delete from news where id = ?';
         var rows = await pool.query(query, [id]);
@@ -32,4 +32,26 @@ async function deleteNew(id) {
     }
 }
 
-module.exports = { getNews, insertNews, deleteNew };
+async function getNewById(id) {
+    try {
+        var query = 'select * from news where id = ?';
+        var rows = await pool.query(query, [id]);
+        return rows[0];
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
+
+async function modifyNewById(obj,id) {
+    try {
+        var query = 'update news set ? where id = ?';
+        var rows = await pool.query(query, [obj, id]);
+        return rows;
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
+
+module.exports = { getNews, insertNews, deleteNewById, getNewById, modifyNewById };

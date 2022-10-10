@@ -66,6 +66,36 @@ async NewsAddPost (req, res) {
             error: true, message: 'No se cargo la novedad'
         })
     }
+},async getNewById (req, res) {
+    let id = req.params.id;
+    let newToModify = await newsModels.getNewById(id)
+    res.status(200).render('modify', {
+        newToModify: newToModify
+    })
+}, async modifyNewById (req, res) {
+    try {
+        let obj = {
+            title: req.body.title,
+            subtitle: req.body.subtitle,
+            body: req.body.body
+        }
+        await newsModels.modifyNewById(obj, req.body.id);
+        console.log("ok")
+        res.redirect('/admin/novedades')
+    }
+    catch (Error) {
+        console.log(Error, "error catch")
+        res.render('modify', { 
+            error: true, 
+            message: 'No se modifico la novedad' 
+        })
+    }
+}
+,
+async deleteNewById (req, res) {
+    let id = req.params.id;
+    await newsModels.deleteNewById(id);
+    res.redirect('/admin/novedades')
 },
 async Logout (req, res) {
     try {
