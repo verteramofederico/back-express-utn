@@ -7,7 +7,8 @@
     <div class="row">
         <div class="col-6 offset-3">
             <h4>Agregar novedad</h4>
-            <form action="/admin/novedades/agregar" method="post">
+            <form action="/admin/novedades/agregar" method="post"  
+            enctype="multipart/form-data">
                 <div class="form-group mt-3">
                     <label>Titulo</label>
                     <input type="text" class="form-control" 
@@ -21,6 +22,10 @@
                     <label>Cuerpo</label>
                     <textarea type="text" class="form-control" placeholder="Cuerpo" name="body">
                     </textarea>
+                </div>
+                <div class="form-group mt-3">
+                    <label>Imagen:</label>
+                    <input type="file" class="form-control" name="image">
                 </div>
                 <button type="submit" class="btn btn-primary mt-5">
                     Guardar

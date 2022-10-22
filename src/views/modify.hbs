@@ -5,23 +5,46 @@
     <div class="row">
         <div class="col-6 offset-3">
             <h4>Modificar novedad</h4>
-            <form action="/admin/novedades/modificar" method="post">
+            
+            <form action="/admin/novedades/modificar" method="post"
+            enctype="multipart/form-data" >
             <input type="hidden" name="id" value="{{newToModify.id}}">
+                
                 <div class="form-group mt-3">
                     <label>Titulo</label>
                     <input type="text" class="form-control"
                     value="{{newToModify.title}}" 
                     placeholder="Titulo" name="title">
                 </div>
+
                 <div class="form-group mt-3">
                     <label>Subtitulo</label>
                     <input value="{{newToModify.subtitle}}" type="text" class="form-control" placeholder="Subtitulo" name="subtitle">
                 </div>
+
+                <div class="form-group mt-3">
+                    <p>
+                        <label>Imagen:
+                            <input type="file" name="image" id="image">
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" name="img_delete" id="img_delete"
+                            value="1"> 
+                            Eliminar imagen actual?
+                        </label>
+                        <input type="hidden" name="img_original" 
+                        value="{{newToModify.img_id}}">
+                    </p>
+                </div>
+
                 <div class="form-group mt-3">
                     <label>Cuerpo</label>
-                    <textarea value="{{newToModify.body}}" type="text" class="form-control" placeholder="Cuerpo" name="body">
-                    </textarea>
+                    <textarea value="{{newToModify.body}}" type="text" 
+                    class="form-control" name="body">{{newToModify.body}}</textarea>
                 </div>
+
                 <button type="submit" class="btn btn-primary mt-5">
                     Guardar
                 </button>

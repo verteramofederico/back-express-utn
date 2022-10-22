@@ -23,6 +23,7 @@ CREATE TABLE `resto_bd`.`news` (
   `title` VARCHAR(45) NULL,
   `subtitle` VARCHAR(250) NULL,
   `body` TEXT NULL,
+  `img_id` VARCHAR(250) NULL,
   PRIMARY KEY (`id`));
 
 INSERT INTO resto_bd.news

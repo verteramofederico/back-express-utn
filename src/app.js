@@ -6,12 +6,18 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
-// session
 const session = require('express-session');
+var fileUpload = require('express-fileupload')
+
 app.use(session({
   secret: "key123",
   resave: false,
   saveUninitialized: true
+}))
+
+app.use(fileUpload({
+  useTempFiles: true, 
+  tempFileDir: '/tmp/'
 }))
 
 var indexRouter = require('./routes/index');
