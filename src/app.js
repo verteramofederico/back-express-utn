@@ -9,6 +9,7 @@ var app = express();
 const session = require('express-session');
 var fileUpload = require('express-fileupload')
 var cors = require('cors')
+app.use(cors())
 
 app.use(session({
   secret: "key123",
