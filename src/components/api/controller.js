@@ -1,5 +1,7 @@
 let newsModels = require('../../models/newsModels')
 let usersModels = require('../../models/usersModels')
+const jwt = require('jsonwebtoken')
+
 
 let cloudinary = require('cloudinary').v2
 
@@ -36,7 +38,18 @@ module.exports = {
             if (data != undefined) {
                 req.session.id_user = data.id;
                 req.session.name = data.name;
-                res.status(200).json(data)
+                // res.status(200).json(data)
+
+            // jwt
+            const payload = { id: data.id, name: data.name }
+            jwt.sign(
+                payload,
+                process.env.SIGNATURE_TOKEN,
+                { expiresIn: 86400 },
+                (error, token) => {
+                    if (error) {throw error, console.log(error)};
+                    return res.status(201).json({ token, name: data.name, id: data.id })
+                }) 
             }
             else {
                 let errorMessage = {mensaje: 'credenciales incorrectas'}
@@ -46,5 +59,7 @@ module.exports = {
             console.log(e)
             res.status(500).send({ Error: e })
         }
-    },
+    },  async Test (req, res) {
+        res.status(200).json("ESTA INFORMACION ES ENVIADA DESDE EL BACK LUEGO DE CHEQUEAR EL TOKEN CON JWTTOKEN.")
+    }
 }
