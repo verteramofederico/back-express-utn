@@ -84,14 +84,20 @@ module.exports = {
             message: "mensaje enviado"
         })
     }, async modifyNewById (req, res) {
-        console.log(req.body)
+        console.log(req.body, "y ahora", req.body.data)
         try {    
             let img_id = req.body.img_original
             let delete_img_old = false
             if (req.body.img_delete === '1') {
                 img_id = null
                 delete_img_old = true
-            } 
+            }  else {
+                if (req.body.newImage/* .length > 1 */) {
+                    //image = req.newImage
+                    //img_id = (await uploader(image.tempFilePath)).public_id;
+                    //delete_img_old = true
+                }
+            }
             if (delete_img_old && req.body.img_original) {
                 await (destroy(req.body.img_original))
             }
