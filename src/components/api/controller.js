@@ -6,8 +6,6 @@ const nodemailer = require("nodemailer");
 let util = require('util')
 let cloudinary = require('cloudinary').v2
 
-const destroy = util.promisify(cloudinary.uploader.destroy)
-
 module.exports = { 
     async getNews (req, res) {
         let news = await newsModels.getNews()
@@ -41,7 +39,6 @@ module.exports = {
             if (data != undefined) {
                 req.session.id_user = data.id;
                 req.session.name = data.name;
-                // res.status(200).json(data)
 
             // jwt
             const payload = { id: data.id, name: data.name }
@@ -84,29 +81,12 @@ module.exports = {
             message: "mensaje enviado"
         })
     }, async modifyNewById (req, res) {
-        console.log(req.body, "y ahora", req.body.data)
-        try {    
-            let img_id = req.body.img_original
-            let delete_img_old = false
-            if (req.body.img_delete === '1') {
-                img_id = null
-                delete_img_old = true
-            }  else {
-                if (req.body.newImage/* .length > 1 */) {
-                    //image = req.newImage
-                    //img_id = (await uploader(image.tempFilePath)).public_id;
-                    //delete_img_old = true
-                }
-            }
-            if (delete_img_old && req.body.img_original) {
-                await (destroy(req.body.img_original))
-            }
-    
+        console.log(req.body, "noche ")
+        try {      
             let obj = {
                 title: req.body.title,
                 subtitle: req.body.subtitle,
-                body: req.body.body,
-                img_id
+                body: req.body.body
             }
             const data = await newsModels.modifyNewById(obj, req.body.id);
             res.status(201).json(data)
